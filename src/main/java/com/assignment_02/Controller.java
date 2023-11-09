@@ -1,21 +1,43 @@
 package com.assignment_02;
 
+import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.layout.VBox;
 
 public class Controller {
 
-    private ObservableList<Marathoner> marathoners = FXCollections.observableArrayList();
+    @FXML
+    private VBox tracks, statuses;
+    @FXML
+    private Button startBtn, pauseBtn, exitBtn;
+    private final ObservableList<Marathoner> marathoners = FXCollections.observableArrayList();
 
     @FXML
     public void initialize() {
-        marathoners.add(new Marathoner("Bob", 1, 10.0, "file:src/main/resources/com/assignment_02/runner1.png"));
-        marathoners.add(new Marathoner("Rob", 2, 20, "file:src/main/resources/com/assignment_02/runner2.png"));
-        marathoners.add(new Marathoner("Tom", 3, 40, "file:src/main/resources/com/assignment_02/runner3.png"));
-        marathoners.add(new Marathoner("Ron", 4, 10.0, "file:src/main/resources/com/assignment_02/runner4.png"));
+        marathoners.add(new Marathoner("Bob", 1, 10.0, "file:src/main/resources/com/assignment_02/runner1.jpg"));
+        marathoners.add(new Marathoner("Rob", 2, 20, "file:src/main/resources/com/assignment_02/runner2.jpg"));
+        marathoners.add(new Marathoner("Tom", 3, 40, "file:src/main/resources/com/assignment_02/runner3.jpg"));
+        marathoners.add(new Marathoner("Ron", 4, 10.0, "file:src/main/resources/com/assignment_02/runner4.jpg"));
 
-        marathoners.forEach(Marathoner::run);
+        for(Marathoner marathoner : marathoners){
 
+        }
+
+
+
+        for (int i = 0; i < marathoners.size(); i++) {
+            if(tracks.getChildren().get(i) instanceof VBox track)
+                track.getChildren().add(marathoners.get(i));
+            if(statuses.getChildren().get(i) instanceof Label statusLabel)
+                statusLabel.textProperty().bind(marathoners.get(i).getStatus());
+        }
+
+        startBtn.setOnAction(e -> marathoners.forEach(Marathoner::run));
+        pauseBtn.setOnAction(e -> marathoners.forEach(Marathoner::pause));
+        exitBtn.setOnAction(e -> System.exit(0));
     }
 }
