@@ -11,6 +11,7 @@ import java.io.IOException;
 public class Main extends Application {
     @Override
     public void start(@NotNull Stage stage) throws IOException {
+        stage.setOnCloseRequest(e -> System.exit(0));
         FXMLLoader loader = new FXMLLoader(getClass().getResource("index.fxml"));
         Scene scene = new Scene(loader.load(), 745,400);
         stage.setResizable(false);
