@@ -1,43 +1,49 @@
 package com.assignment_02;
 
-import javafx.beans.property.SimpleObjectProperty;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.stage.Stage;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.layout.VBox;
+import org.jetbrains.annotations.NotNull;
+
+import java.io.IOException;
+import java.util.Objects;
 
 public class Controller {
-
     @FXML
-    private VBox tracks, statuses;
-    @FXML
-    private Button startBtn, pauseBtn, exitBtn;
-    private final ObservableList<Marathoner> marathoners = FXCollections.observableArrayList();
+    private Button showBtn, marathonBtn;
 
     @FXML
     public void initialize() {
-        marathoners.add(new Marathoner("Bob", 1, 10.0, "file:src/main/resources/com/assignment_02/runner1.jpg"));
-        marathoners.add(new Marathoner("Rob", 2, 20, "file:src/main/resources/com/assignment_02/runner2.jpg"));
-        marathoners.add(new Marathoner("Tom", 3, 40, "file:src/main/resources/com/assignment_02/runner3.jpg"));
-        marathoners.add(new Marathoner("Ron", 4, 10.0, "file:src/main/resources/com/assignment_02/runner4.jpg"));
+        showBtn.setOnAction(e -> {
+            try {
+                switchToScene(e, "show.fxml");
+            } catch (IOException ex) {
+                throw new RuntimeException(ex);
+            }
+        });
 
-        for(Marathoner marathoner : marathoners){
+        marathonBtn.setOnAction(e -> {
+            try {
+                switchToScene(e, "marathon.fxml");
+            } catch (IOException ex) {
+                throw new RuntimeException(ex);
+            }
+        });
+    }
 
-        }
+    public static void switchToScene(@NotNull ActionEvent e, @NotNull String fxmlName) throws IOException {
+        if(!fxmlName.contains(".fxml"))
+            throw new IllegalArgumentException("fxmlName must be a valid fxml file name");
 
-
-
-        for (int i = 0; i < marathoners.size(); i++) {
-            if(tracks.getChildren().get(i) instanceof VBox track)
-                track.getChildren().add(marathoners.get(i));
-            if(statuses.getChildren().get(i) instanceof Label statusLabel)
-                statusLabel.textProperty().bind(marathoners.get(i).getStatus());
-        }
-
-        startBtn.setOnAction(e -> marathoners.forEach(Marathoner::run));
-        pauseBtn.setOnAction(e -> marathoners.forEach(Marathoner::pause));
-        exitBtn.setOnAction(e -> System.exit(0));
+        Parent root = FXMLLoader.load(Objects.requireNonNull(Controller.class.getResource(fxmlName)));
+        Stage stage = (Stage) ((Node) e.getSource()).getScene().getWindow();
+        Scene scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
     }
 }

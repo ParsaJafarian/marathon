@@ -1,7 +1,6 @@
 package com.assignment_02;
 
 import javafx.animation.TranslateTransition;
-import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.beans.value.ObservableValue;
@@ -14,10 +13,12 @@ public class Marathoner extends ImageView {
     private final TranslateTransition transition;
     private final StringProperty status;
 
-    public Marathoner(String name, int number, double speed, String imageUrl){
+    public Marathoner(String name, int number, String imageUrl){
         super();
         this.name = name;
         this.status = new SimpleStringProperty(number + " " + this.name + " is running");
+
+        double speed = Math.random() * 15 + 5;
 
         transition = new TranslateTransition(new Duration(100/speed * 1000), this);
         transition.setToX(500);
