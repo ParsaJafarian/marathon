@@ -22,17 +22,17 @@ public class Controller {
         marathonBtn.setOnAction(e -> switchToScene(e, "marathon.fxml"));
     }
 
-    public static void switchToScene(@NotNull ActionEvent e, @NotNull String fxmlName) {
+    public static void switchToScene(@NotNull ActionEvent event, @NotNull String fxmlName) {
         if(!fxmlName.contains(".fxml"))
             throw new IllegalArgumentException("fxmlName must be a valid fxml file name");
         try {
             Parent root = FXMLLoader.load(Objects.requireNonNull(Controller.class.getResource(fxmlName)));
-            Stage stage = (Stage) ((Node) e.getSource()).getScene().getWindow();
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             Scene scene = new Scene(root);
             stage.setScene(scene);
             stage.show();
-        } catch(IOException ex) {
-            throw new RuntimeException(ex);
+        } catch(IOException exception) {
+            throw new RuntimeException(exception);
         }
     }
 }
