@@ -35,7 +35,7 @@
                <children>
                   <ImageView fitHeight="298.0" fitWidth="92.0">
                      <image>
-                        <Image url="@img.png" />
+                        <Image url="@images/finish-line.png" />
                      </image>
                   </ImageView>
                </children>

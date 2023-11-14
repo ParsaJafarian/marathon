@@ -55,10 +55,10 @@ public class ShowController {
 
     private @NotNull ObservableList<Image> initializeImages() {
         ObservableList<Image> images = FXCollections.observableArrayList();
-        images.add(new Image("file:src/main/resources/com/assignment_02/runner1.jpg"));
-        images.add(new Image("file:src/main/resources/com/assignment_02/runner2.jpg"));
-        images.add(new Image("file:src/main/resources/com/assignment_02/runner3.jpg"));
-        images.add(new Image("file:src/main/resources/com/assignment_02/runner4.jpg"));
+        images.add(new Image("file:src/main/resources/com/assignment_02/images/marathoner1.jpg"));
+        images.add(new Image("file:src/main/resources/com/assignment_02/images/marathoner2.jpg"));
+        images.add(new Image("file:src/main/resources/com/assignment_02/images/marathoner3.jpg"));
+        images.add(new Image("file:src/main/resources/com/assignment_02/images/marathoner4.jpg"));
         return images;
     }
 }
