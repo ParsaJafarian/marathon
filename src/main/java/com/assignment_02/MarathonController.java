@@ -1,12 +1,10 @@
 package com.assignment_02;
 
-import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
-import org.jetbrains.annotations.NotNull;
 
 import static com.assignment_02.Controller.switchToScene;
 
@@ -16,8 +14,7 @@ public class MarathonController {
     private VBox tracks, statuses;
     @FXML
     private Button backBtn, startBtn, pauseBtn, exitBtn;
-    private final ObservableList<Marathoner> marathoners = initializeMarathoners();
-
+    private final ObservableList<Marathoner> marathoners = Marathoner.marathoners;
     @FXML
     public void initialize() {
         for (int i = 0; i < marathoners.size(); i++) {
@@ -27,18 +24,13 @@ public class MarathonController {
                 statusLabel.textProperty().bind(marathoners.get(i).getStatus());
         }
 
-        startBtn.setOnAction(e -> marathoners.forEach(Marathoner::run));
+        startBtn.setOnAction(e -> {
+            if(marathoners.stream().allMatch(m -> m.getStatus().getValue().contains("finished")))
+                marathoners.forEach(Marathoner::goToStartPosition);
+            else marathoners.forEach(Marathoner::run);
+        });
         pauseBtn.setOnAction(e -> marathoners.forEach(Marathoner::pause));
         exitBtn.setOnAction(e -> System.exit(0));
         backBtn.setOnAction(e -> switchToScene(e, "index.fxml"));
-    }
-
-    private @NotNull ObservableList<Marathoner> initializeMarathoners() {
-        ObservableList<Marathoner> marathoners = FXCollections.observableArrayList();
-        marathoners.add(new Marathoner("Bob", 1, "file:src/main/resources/com/assignment_02/images/marathoner1.jpg"));
-        marathoners.add(new Marathoner("Rob", 2, "file:src/main/resources/com/assignment_02/images/marathoner2.jpg"));
-        marathoners.add(new Marathoner("Tom", 3, "file:src/main/resources/com/assignment_02/images/marathoner3.jpg"));
-        marathoners.add(new Marathoner("Ron", 4, "file:src/main/resources/com/assignment_02/images/marathoner4.jpg"));
-        return marathoners;
     }
 }
