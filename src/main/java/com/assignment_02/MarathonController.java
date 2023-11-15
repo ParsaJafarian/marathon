@@ -8,6 +8,10 @@ import javafx.scene.layout.VBox;
 
 import static com.assignment_02.Controller.switchToScene;
 
+/**
+ * This controller is for the marathon.fxml.
+ * It displays the marathoners, their animations, and their statuses.
+ */
 public class MarathonController {
 
     /**

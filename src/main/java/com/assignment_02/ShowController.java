@@ -16,6 +16,10 @@ import static com.assignment_02.Marathoner.getUrl;
 
 import javax.sound.sampled.*;
 
+/**
+ * This controller is for the show.fxml.
+ * It displays the slide show of the marathoners with a crowd sound.
+ */
 public class ShowController {
     /**
      * An ObservableList of images of the marathoners
@@ -28,21 +32,8 @@ public class ShowController {
 
     @FXML
     public void initialize() {
-        //Play the crowd sound
-        Clip clip;
-        //Surrounded with try catch because the AudioSystem.getAudioInputStream method throws an UnsupportedAudioFileException and an IOException.
-        try {
-            //Load the crowd.wav file
-            File audioFile = new File("src/main/resources/com/assignment_02/crowd.wav");
-            //Get the audio stream from the audio file and open the clip
-            AudioInputStream audioStream = AudioSystem.getAudioInputStream(audioFile);
-            clip = AudioSystem.getClip();
-            clip.open(audioStream);
-            clip.start();
-        } catch (Exception e) {
-            //If the file is not found, throw a RuntimeException to terminate the program.
-            throw new RuntimeException(e);
-        }
+        Clip clip = getAudioClip("src/main/resources/com/assignment_02/sounds/crowd.wav");
+        clip.loop(Clip.LOOP_CONTINUOUSLY);
 
         //Go back to the index page when the backBtn is clicked.
         backBtn.setOnAction(e -> {
@@ -68,6 +59,29 @@ public class ShowController {
                 }
             }
         }).start();
+    }
+
+    /**
+     * The purpose of this method is to get a Clip of the audio file from the given path so
+     * that it can be manipulated in any other controller. Hence, why it is static.
+     * @param path The path of the audio file
+     * @return A Clip of the audio file
+     */
+    public static @NotNull Clip getAudioClip(String path){
+        Clip clip;
+        //Surrounded with try catch because the AudioSystem.getAudioInputStream method throws an UnsupportedAudioFileException and an IOException.
+        try {
+            //Load the file through the path
+            File audioFile = new File(path);
+            //Get the audio stream from the audio file and open the clip
+            AudioInputStream audioStream = AudioSystem.getAudioInputStream(audioFile);
+            clip = AudioSystem.getClip();
+            clip.open(audioStream);
+            return clip;
+        } catch (Exception e) {
+            //If the file is not found, throw a RuntimeException to terminate the program.
+            throw new RuntimeException(e);
+        }
     }
 
     /**

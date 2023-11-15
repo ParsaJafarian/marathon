@@ -13,6 +13,10 @@ import org.jetbrains.annotations.NotNull;
 import java.io.IOException;
 import java.util.Objects;
 
+/**
+ * This is the controller for the index.fxml.
+ * Its sole purpose is to redirect the user to the show.fxml or the marathon.fxml.
+ */
 public class Controller {
     @FXML private Button showBtn, marathonBtn;
 
@@ -26,6 +30,7 @@ public class Controller {
 
     /**
      * The purpose of this method is to switch to another scene with the given fxml file name.
+     * It is static because it is used in MarathonController and ShowController.
      * @param event The event that triggers the switch to another scene
      * @param fxmlName The name of the fxml file to switch to
      */

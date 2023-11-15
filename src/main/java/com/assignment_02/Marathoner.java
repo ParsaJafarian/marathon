@@ -12,6 +12,10 @@ import javafx.util.Duration;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 
+import javax.sound.sampled.Clip;
+
+import static com.assignment_02.ShowController.getAudioClip;
+
 /**
  * This class represents a marathoner participating in the marathon.
  * It extends ImageView to display the image of the marathoner both in the slide show and the marathon itself.
@@ -43,7 +47,7 @@ public class Marathoner extends ImageView {
         this.setStatus("is ready to run");
 
         //The transition is initialized with a duration of 100 / speed * 100 milliseconds.
-        transition = new TranslateTransition(new Duration(100 / speed * 100), this);
+        transition = new TranslateTransition(new Duration(100 / speed * 500), this);
         //The marathoner moves to the right by 500 pixels. In other words, it runs until the end of the track.
         transition.setToX(500);
         transition.setOnFinished(e -> {
@@ -55,6 +59,9 @@ public class Marathoner extends ImageView {
             else if(numFinished == 1) this.setStatus("finished 2nd");
             else if(numFinished == 2) this.setStatus("finished 3rd");
             else this.setStatus("finished " + (numFinished + 1) + "th");
+
+            Clip clip = getAudioClip("src/main/resources/com/assignment_02/sounds/bell.wav");
+            clip.start();
         });
 
         //Load the image of the marathoner and set its height and width to 50 pixels.
@@ -112,7 +119,7 @@ public class Marathoner extends ImageView {
         //Regenerate the speed of the marathoner to a random number between 5 and 20.
         this.speed = Math.random() * 15 + 5;
         //Reset the duration of the transition with the new speed.
-        transition.setDuration(new Duration(100 / speed * 100));
+        transition.setDuration(new Duration(100 / speed * 500));
     }
 
     /**
